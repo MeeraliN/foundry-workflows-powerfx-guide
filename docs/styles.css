@@ -1,0 +1,266 @@
+:root {
+  --bg: #0b1020;
+  --surface: #131a2f;
+  --surface-alt: #f4f7fb;
+  --card: #ffffff;
+  --text: #101828;
+  --text-light: #e6edf8;
+  --muted: #5b6475;
+  --border: #d7deea;
+  --accent: #4f46e5;
+  --accent-soft: #e7e8ff;
+  --success: #0f766e;
+  --shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  background: #ffffff;
+  line-height: 1.6;
+}
+
+.container {
+  width: min(1120px, calc(100% - 2rem));
+  margin: 0 auto;
+}
+
+.container.narrow {
+  width: min(760px, calc(100% - 2rem));
+}
+
+.hero {
+  background: linear-gradient(135deg, #0b1020, #1d2b64);
+  color: var(--text-light);
+  padding: 5rem 0 4rem;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.82rem;
+  color: #b9c4ff;
+  margin: 0 0 0.75rem;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+  margin-top: 0;
+}
+
+h1 {
+  font-size: clamp(2.2rem, 4vw, 4rem);
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  margin-bottom: 0.75rem;
+}
+
+h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.65rem;
+}
+
+.lede,
+.section-intro {
+  font-size: 1.05rem;
+  color: inherit;
+  max-width: 70ch;
+}
+
+.hero-actions,
+.grid,
+.module-grid,
+.quest-board,
+.answer-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.hero-actions {
+  margin-top: 1.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, max-content));
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9rem 1.15rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+
+.button.primary {
+  background: #ffffff;
+  color: #111827;
+}
+
+.button.secondary {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.button.ghost {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.section {
+  padding: 4rem 0;
+}
+
+.section.alt {
+  background: var(--surface-alt);
+}
+
+.grid.two {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.card,
+.module-card,
+.quest-card,
+.answer-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+}
+
+.gap-list {
+  padding-left: 1.2rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+}
+
+th,
+td {
+  padding: 1rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--border);
+}
+
+th {
+  background: #eef2ff;
+}
+
+.module-grid {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  margin-top: 1.25rem;
+}
+
+.module-number {
+  display: inline-block;
+  margin-bottom: 0.8rem;
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.quest-board {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  margin-top: 1.25rem;
+}
+
+.answers-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: end;
+  flex-wrap: wrap;
+}
+
+.search input {
+  min-width: min(100%, 380px);
+  width: 380px;
+  max-width: 100%;
+  padding: 0.9rem 1rem;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  font-size: 1rem;
+}
+
+.search-status {
+  margin: 1rem 0 0;
+  color: var(--muted);
+  min-height: 1.5rem;
+}
+
+.answer-grid {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  margin-top: 1rem;
+}
+
+.answer-short {
+  color: var(--success);
+  font-weight: 700;
+}
+
+code {
+  background: var(--accent-soft);
+  padding: 0.12rem 0.35rem;
+  border-radius: 6px;
+  font-family: Consolas, "Courier New", monospace;
+}
+
+a {
+  color: var(--accent);
+}
+
+.footer {
+  background: var(--bg);
+  color: var(--text-light);
+  padding: 1.25rem 0;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .section {
+    padding: 3rem 0;
+  }
+
+  .hero {
+    padding: 4rem 0 3rem;
+  }
+}

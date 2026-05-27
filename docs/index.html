@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foundry Workflows + Power Fx Learning Path</title>
+  <meta name="description" content="A learner-focused guide for understanding Power Fx inside Microsoft Foundry workflows.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="container">
+      <p class="eyebrow">Microsoft Foundry UI learning path</p>
+      <h1>Master Power Fx inside Foundry workflows</h1>
+      <p class="lede">
+        This site bridges the exact gap most workflow builders hit: you can write a formula,
+        but you do not yet know what type the field expects, why `UserMessage(...)` is needed,
+        or how to stop debugging by guesswork.
+      </p>
+      <div class="hero-actions">
+        <a class="button primary" href="#answers">Search answers</a>
+        <a class="button secondary" href="#learning-path">Start learning path</a>
+        <a class="button ghost" href="https://github.com/MeeraliN/foundry-workflows-powerfx-guide/issues/new?template=question.yml">Ask a question</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" id="fast-answers">
+      <div class="container">
+        <h2>Fast answers</h2>
+        <div class="grid two">
+          <article class="card">
+            <h3>Why does plain text fail in some agent fields?</h3>
+            <p>Because some agent inputs expect a <strong>message collection</strong>, not a string. In those places, use a message-shaped value such as <code>UserMessage(Local.PromptText)</code>.</p>
+          </article>
+          <article class="card">
+            <h3>What does <code>Name isn't valid</code> usually mean?</h3>
+            <p>Usually the variable name is wrong or the scope prefix is missing. In Foundry workflows, most values come from <code>System.</code> or <code>Local.</code>.</p>
+          </article>
+          <article class="card">
+            <h3>What does <code>Type mismatch</code> usually mean?</h3>
+            <p>The field expects one type and your formula returns another. Think in terms of string, Boolean, record, table, blank, or message collection.</p>
+          </article>
+          <article class="card">
+            <h3>What should a beginner learn first?</h3>
+            <p>Learn strings, Booleans, scope, conditions, and saved variables first. Then move into messages, structured outputs, loops, and troubleshooting.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="gap">
+      <div class="container narrow">
+        <h2>The exact gap this guide fills</h2>
+        <p>
+          The hard part in Foundry workflows is not dragging nodes into the canvas. The hard part is knowing
+          what each field expects and what your Power Fx formula actually returns.
+        </p>
+        <ol class="gap-list">
+          <li>Which workflow fields want plain text?</li>
+          <li>Which fields want a Boolean?</li>
+          <li>Which fields want a table or record?</li>
+          <li>Which agent inputs want a message collection like <code>UserMessage(...)</code>?</li>
+          <li>How do you convert between shapes without trial and error?</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" id="field-map">
+      <div class="container">
+        <h2>Field-to-type map</h2>
+        <p class="section-intro">If a learner remembers only one thing, it should be this: every field in the workflow UI expects a type.</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Workflow field</th>
+                <th>Usually expects</th>
+                <th>Good example</th>
+                <th>Common failure</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Send a message</td>
+                <td>String</td>
+                <td><code>"Hello"</code> or <code>Upper(Local.Name)</code></td>
+                <td>Using a table or record by mistake</td>
+              </tr>
+              <tr>
+                <td>If/else condition</td>
+                <td>Boolean</td>
+                <td><code>StartsWith(System.LastMessageText, "help")</code></td>
+                <td>Putting plain text where true/false is required</td>
+              </tr>
+              <tr>
+                <td>Set variable</td>
+                <td>The target variable's shape</td>
+                <td><code>CountRows(Local.Items)</code></td>
+                <td>Saving text into something later treated like a table</td>
+              </tr>
+              <tr>
+                <td>Agent message input</td>
+                <td>Message collection</td>
+                <td><code>UserMessage(Local.PromptText)</code></td>
+                <td>Sending <code>Local.PromptText</code> as if it were already a message object</td>
+              </tr>
+              <tr>
+                <td>For-each source</td>
+                <td>Table or collection</td>
+                <td><code>Local.Items</code></td>
+                <td>Trying to loop over a single string</td>
+              </tr>
+              <tr>
+                <td>Structured output lookup</td>
+                <td>Record or parsed JSON</td>
+                <td><code>Local.Result.category</code></td>
+                <td>Assuming JSON text is already a record</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="learning-path">
+      <div class="container">
+        <h2>Learning path</h2>
+        <p class="section-intro">Follow this in order like a Microsoft Learn module sequence.</p>
+        <div class="module-grid">
+          <article class="module-card">
+            <span class="module-number">01</span>
+            <h3>Workflow basics before formulas</h3>
+            <p>Understand nodes, saved outputs, where formulas appear, and why not every field behaves the same way.</p>
+            <ul>
+              <li>Find where Power Fx is used in the UI</li>
+              <li>Know which fields are plain text and which are expressions</li>
+              <li>Build one ask -> save -> reply workflow</li>
+            </ul>
+          </article>
+          <article class="module-card">
+            <span class="module-number">02</span>
+            <h3>Scope and variable survival</h3>
+            <p>Master <code>System.</code> and <code>Local.</code> so the learner stops hitting basic name errors.</p>
+            <ul>
+              <li>Use <code>System.LastMessageText</code></li>
+              <li>Save a local variable and reuse it</li>
+              <li>Fix <code>Name isn't valid</code> fast</li>
+            </ul>
+          </article>
+          <article class="module-card">
+            <span class="module-number">03</span>
+            <h3>Types before syntax</h3>
+            <p>Learn the shapes that matter in workflows: string, Boolean, record, table, blank, and message collection.</p>
+            <ul>
+              <li>Match a field to the type it expects</li>
+              <li>Spot type mismatches early</li>
+              <li>Use conversion helpers such as <code>Text()</code> and <code>Value()</code></li>
+            </ul>
+          </article>
+          <article class="module-card">
+            <span class="module-number">04</span>
+            <h3>Agent inputs and <code>UserMessage(...)</code></h3>
+            <p>Bridge the biggest workflow confusion: why some agent message fields need message objects rather than plain text.</p>
+            <ul>
+              <li>Understand why plain text can fail</li>
+              <li>Use <code>UserMessage(Local.PromptText)</code> correctly</li>
+              <li>Know when the field wants chat-shaped input</li>
+            </ul>
+          </article>
+          <article class="module-card">
+            <span class="module-number">05</span>
+            <h3>Branching and conditions</h3>
+            <p>Learn how to create conditions that truly return a Boolean instead of looking like logic but failing at runtime.</p>
+            <ul>
+              <li>Use <code>If</code>, <code>StartsWith</code>, and comparisons</li>
+              <li>Branch on confidence, category, or user intent</li>
+              <li>Avoid putting strings inside condition-only fields</li>
+            </ul>
+          </article>
+          <article class="module-card">
+            <span class="module-number">06</span>
+            <h3>Structured outputs and JSON</h3>
+            <p>Move from linear prompting to real workflow routing by saving structured outputs and reading fields safely.</p>
+            <ul>
+              <li>Save JSON output from an agent</li>
+              <li>Read properties from records</li>
+              <li>Use <code>ParseJSON</code> only when needed</li>
+            </ul>
+          </article>
+          <article class="module-card">
+            <span class="module-number">07</span>
+            <h3>Tables, collections, and loops</h3>
+            <p>Handle more than one item at a time with table-shaped data and for-each patterns.</p>
+            <ul>
+              <li>Know when you have a single value versus a collection</li>
+              <li>Use <code>CountRows</code>, <code>First</code>, and <code>Filter</code></li>
+              <li>Stop loop failures caused by wrong input shape</li>
+            </ul>
+          </article>
+          <article class="module-card">
+            <span class="module-number">08</span>
+            <h3>Troubleshooting like a builder</h3>
+            <p>Turn frustrating errors into predictable fixes by mapping each message back to type, scope, or shape.</p>
+            <ul>
+              <li>Decode common errors fast</li>
+              <li>Check type before rewriting syntax</li>
+              <li>Debug with a repeatable workflow</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="game-mode">
+      <div class="container">
+        <h2>Game mode: from beginner to expert</h2>
+        <p class="section-intro">This is the mastery track. Each rank closes part of the gap.</p>
+        <div class="quest-board">
+          <article class="quest-card">
+            <h3>Rookie Builder</h3>
+            <p>Mission: build <code>ask -> save -> reply</code>.</p>
+            <p>Win condition: save a user answer into <code>Local.Name</code> and return <code>Upper(Local.Name)</code>.</p>
+          </article>
+          <article class="quest-card">
+            <h3>Branch Explorer</h3>
+            <p>Mission: route a workflow using a real Boolean.</p>
+            <p>Win condition: branch successfully from <code>System.LastMessageText</code>.</p>
+          </article>
+          <article class="quest-card">
+            <h3>Type Detective</h3>
+            <p>Mission: solve three failures without guessing.</p>
+            <p>Win condition: explain whether the field expects string, Boolean, table, record, blank, or message collection.</p>
+          </article>
+          <article class="quest-card">
+            <h3>Message Wrangler</h3>
+            <p>Mission: fix the agent-input gap.</p>
+            <p>Win condition: replace failing plain text with <code>UserMessage(Local.PromptText)</code> where needed.</p>
+          </article>
+          <article class="quest-card">
+            <h3>Flow Strategist</h3>
+            <p>Mission: route from structured output.</p>
+            <p>Win condition: save JSON output, read a field, and branch correctly.</p>
+          </article>
+          <article class="quest-card">
+            <h3>Foundry Architect</h3>
+            <p>Mission: build one full workflow that uses agent input, branching, collections, and escalation.</p>
+            <p>Win condition: explain every field's expected type without trial and error.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="answers">
+      <div class="container">
+        <div class="answers-header">
+          <div>
+            <h2>Instant answer library</h2>
+            <p class="section-intro">Search the question and jump straight to the answer.</p>
+          </div>
+          <label class="search">
+            <span class="sr-only">Search answers</span>
+            <input id="search-input" type="search" placeholder="Search: UserMessage, type mismatch, Local, loops, JSON...">
+          </label>
+        </div>
+
+        <div id="search-status" class="search-status" aria-live="polite"></div>
+
+        <div class="answer-grid" id="answer-grid">
+          <article class="answer-card" data-keywords="plain text fail agent input usermessage message collection type">
+            <h3>Why does plain text fail in some agent inputs?</h3>
+            <p class="answer-short">Because the field expects a message collection, not a raw string.</p>
+            <p>If the node expects chat-shaped input, the value needs to look like a user message rather than plain text. That is why <code>UserMessage(Local.PromptText)</code> works where <code>Local.PromptText</code> alone fails.</p>
+          </article>
+
+          <article class="answer-card" data-keywords="usermessage when use meaning message collection">
+            <h3>When should I use <code>UserMessage(...)</code>?</h3>
+            <p class="answer-short">Use it when the workflow field expects a message object or message collection for an agent conversation.</p>
+            <p>Use plain text only when the field wants a string. Use <code>UserMessage(...)</code> when the field wants chat history or a message-shaped payload.</p>
+          </article>
+
+          <article class="answer-card" data-keywords="name isn't valid invalid name local system scope">
+            <h3>What does <code>Name isn't valid</code> usually mean?</h3>
+            <p class="answer-short">The value is missing a scope prefix or the variable name is wrong.</p>
+            <p>In Foundry workflows, most values come from <code>System.</code> or <code>Local.</code>. If you reference <code>Name</code> when the actual variable is <code>Local.Name</code>, the formula fails.</p>
+          </article>
+
+          <article class="answer-card" data-keywords="type mismatch error expected actual convert text value">
+            <h3>What does <code>Type mismatch</code> usually mean?</h3>
+            <p class="answer-short">The field expects one shape and your formula produces another.</p>
+            <p>Start by identifying the field type first. Then inspect your formula result. If needed, convert or reshape the output using helpers such as <code>Text()</code>, <code>Value()</code>, or a message constructor.</p>
+          </article>
+
+          <article class="answer-card" data-keywords="system local difference variables scope">
+            <h3>What is the difference between <code>System.</code> and <code>Local.</code>?</h3>
+            <p class="answer-short"><code>System.</code> exposes workflow-provided values. <code>Local.</code> exposes values created inside your workflow.</p>
+            <p>Examples: <code>System.LastMessageText</code> is built in. <code>Local.CustomerName</code> exists because your workflow stored it.</p>
+          </article>
+
+          <article class="answer-card" data-keywords="if else condition boolean true false branch">
+            <h3>Why does my condition fail even though the formula looks logical?</h3>
+            <p class="answer-short">Because the field only accepts a Boolean.</p>
+            <p>Condition nodes need something that evaluates to true or false. A text value like <code>"help"</code> is not a Boolean. A formula like <code>StartsWith(System.LastMessageText, "help")</code> is.</p>
+          </article>
+
+          <article class="answer-card" data-keywords="structured output json schema save output parsejson record">
+            <h3>How do I work with structured output from an agent?</h3>
+            <p class="answer-short">Save the agent output as structured JSON, then read its fields as a record when possible.</p>
+            <p>If the workflow already stores structured output for you, prefer reading fields directly. Use <code>ParseJSON</code> only when you truly have JSON text that still needs parsing.</p>
+          </article>
+
+          <article class="answer-card" data-keywords="foreach loop collection table countrows first filter">
+            <h3>Why does my loop fail?</h3>
+            <p class="answer-short">Because the for-each source is not actually a table or collection.</p>
+            <p>If the source is a single string or record, the loop cannot iterate. Confirm that the source really contains multiple items and use table functions such as <code>CountRows</code> to inspect it.</p>
+          </article>
+
+          <article class="answer-card" data-keywords="blank empty missing coalesce isblank">
+            <h3>How should I handle missing values?</h3>
+            <p class="answer-short">Treat missing values as a separate case instead of letting them fail silently.</p>
+            <p>Use <code>IsBlank</code> to detect missing data and <code>Coalesce</code> to provide a safe fallback when appropriate.</p>
+          </article>
+
+          <article class="answer-card" data-keywords="text value convert conversion string number">
+            <h3>When should I use <code>Text()</code> or <code>Value()</code>?</h3>
+            <p class="answer-short">Use them when the field expects a different primitive type than your current value.</p>
+            <p><code>Text()</code> turns numbers or dates into strings. <code>Value()</code> turns numeric text into a number when the target field expects numeric comparison or math.</p>
+          </article>
+
+          <article class="answer-card" data-keywords="json parsejson difference">
+            <h3>What is the difference between <code>JSON()</code> and <code>ParseJSON()</code>?</h3>
+            <p class="answer-short"><code>JSON()</code> creates JSON text. <code>ParseJSON()</code> reads JSON text back into a usable shape.</p>
+            <p>If you already have a record from the workflow, do not convert it to JSON text just to parse it again.</p>
+          </article>
+
+          <article class="answer-card" data-keywords="beginner what learn first workflow power fx">
+            <h3>What should a beginner learn first?</h3>
+            <p class="answer-short">Start with scope, strings, Booleans, conditions, and one saved variable flow.</p>
+            <p>Do not start with JSON, loops, or advanced agent chaining. First learn how a value moves through a workflow and how to tell what type a field expects.</p>
+          </article>
+
+          <article class="answer-card" data-keywords="official docs enough fragmented gap">
+            <h3>Why are the official docs not enough for this gap?</h3>
+            <p class="answer-short">Because the official material is helpful but fragmented across workflow docs, Power Fx docs, and scattered examples.</p>
+            <p>The missing piece is a workflow-first explanation of types, message collections, and UI-specific formula behavior.</p>
+          </article>
+
+          <article class="answer-card" data-keywords="debug workflow formula step by step">
+            <h3>What is the fastest way to debug a failing workflow expression?</h3>
+            <p class="answer-short">Check scope first, then expected type, then actual output shape.</p>
+            <p>Do not rewrite the whole formula immediately. First ask: is the name valid, is the field expecting a Boolean or string, and is my value actually a table, record, or message collection?</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="official-resources">
+      <div class="container">
+        <h2>Official resources</h2>
+        <div class="grid two">
+          <article class="card">
+            <h3>Build a workflow in Microsoft Foundry</h3>
+            <p>The best official workflow concept page for nodes, variables, branching, and Power Fx basics.</p>
+            <a href="https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/workflow">Open official workflow docs</a>
+          </article>
+          <article class="card">
+            <h3>Build agent-driven workflows using Microsoft Foundry</h3>
+            <p>The closest official training module, useful as a baseline before using this gap guide.</p>
+            <a href="https://learn.microsoft.com/en-us/training/modules/build-agent-workflows-microsoft-foundry/">Open training module</a>
+          </article>
+          <article class="card">
+            <h3>Power Fx overview</h3>
+            <p>Use this for language background, not for workflow-specific type questions.</p>
+            <a href="https://learn.microsoft.com/en-us/power-platform/power-fx/overview">Open Power Fx overview</a>
+          </article>
+          <article class="card">
+            <h3>Power Fx formula reference</h3>
+            <p>Use this after you know what kind of expression the workflow field actually needs.</p>
+            <a href="https://learn.microsoft.com/en-us/power-platform/power-fx/formula-reference-copilot-studio">Open formula reference</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="ask">
+      <div class="container narrow">
+        <h2>Need an answer that is not here yet?</h2>
+        <p>This site is meant to become the place where a learner asks a workflow Power Fx question and gets the answer quickly.</p>
+        <a class="button primary" href="https://github.com/MeeraliN/foundry-workflows-powerfx-guide/issues/new?template=question.yml">Ask a question in GitHub</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Built to close the Microsoft Foundry workflows + Power Fx learning gap.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
