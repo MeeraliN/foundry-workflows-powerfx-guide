@@ -11,7 +11,6 @@ If you want the short version first, start with these:
 - **Why does plain text sometimes fail?** Some workflow fields expect a [message collection](#important-pattern-message-collections), not a raw string.
 - **How do I stop trial and error?** Use the [troubleshooting guide](#level-6-learn-troubleshooting-like-an-expert) to map errors to likely causes.
 - **How do I go from beginner to advanced?** Follow the [game mode level-up path](#game-mode-level-up-path).
-
 The current official material is useful, but fragmented. You can find:
 
 | Resource | What it helps with | Link |
@@ -283,7 +282,6 @@ Build a workflow that:
 6. sends the final answer to the user or a human approver
 
 If you can do that without guessing what type each field expects, you are no longer a beginner.
-
 ## Suggested teaching structure for this repository
 
 If you want this repo to become the missing learning path, the best structure is:
