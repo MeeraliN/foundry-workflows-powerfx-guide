@@ -12,12 +12,21 @@ This repo answers those questions directly.
 
 ## Start here
 
-- **Learning site source:** [docs/index.html](docs/index.html)
-- **Expected GitHub Pages URL:** [meeralin.github.io/foundry-workflows-powerfx-guide](https://meeralin.github.io/foundry-workflows-powerfx-guide/)
-- **Ask a question:** [Open a GitHub question](https://github.com/MeeraliN/foundry-workflows-powerfx-guide/issues/new?template=question.yml)
-- **Official workflow docs:** https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/workflow
-- **Official training module:** https://learn.microsoft.com/en-us/training/modules/build-agent-workflows-microsoft-foundry/
+| If the learner wants to... | Open this |
+| --- | --- |
+| Get quick answers first | [Fast answers](docs/guide.md#fast-answers) |
+| Understand what each field expects | [Field-to-type map](docs/guide.md#field-to-type-map) |
+| Follow the learning path step by step | [Learning path](docs/guide.md#learning-path) |
+| Play the mastery game | [Play Game Mode](docs/game-mode.md) |
+| Ask a workflow Power Fx question | [Question portal](https://github.com/MeeraliN/foundry-workflows-powerfx-guide/issues/new?template=question.yml) |
+| Browse the live learning hub when available | [Learning hub](https://meeralin.github.io/foundry-workflows-powerfx-guide/) |
+
+## Official references
+
+- **Workflow docs:** https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/workflow
+- **Training module:** https://learn.microsoft.com/en-us/training/modules/build-agent-workflows-microsoft-foundry/
 - **Power Fx overview:** https://learn.microsoft.com/en-us/power-platform/power-fx/overview
+- **Power Fx formula reference:** https://learn.microsoft.com/en-us/power-platform/power-fx/formula-reference-copilot-studio
 
 ## What this repo fixes
 
@@ -29,24 +38,16 @@ The gap is not "Power Fx syntax in general." The gap is **Power Fx inside Foundr
 4. when to use strings, Booleans, tables, records, or message collections
 5. how to stop debugging by guesswork
 
-## What is inside the learning site
+## Use this repository like a learner
 
-The site is organized like a learner-facing module:
+The learner should be able to click once and start:
 
-- **Fast answers** for the most common workflow questions
-- **Field-to-type map** for the UI
-- **Step-by-step learning path** from beginner to advanced
-- **Game mode quests** to practice the hard parts
-- **Searchable answer library** for type errors, `UserMessage(...)`, conditions, loops, JSON, and troubleshooting
-- **Ask a question** button that opens a GitHub issue form
-
-## GitHub Pages
-
-This repository includes a GitHub Pages workflow in `.github/workflows/deploy-pages.yml` that publishes the site from `docs/`.
-
-Once Pages is enabled for the repository, the site should publish at:
-
-`https://meeralin.github.io/foundry-workflows-powerfx-guide/`
+- [Fast answers](docs/guide.md#fast-answers) for the most common workflow questions
+- [Field-to-type map](docs/guide.md#field-to-type-map) for the UI
+- [Step-by-step learning path](docs/guide.md#learning-path) from beginner to advanced
+- [Game mode quests](docs/game-mode.md) to practice the hard parts
+- [Question portal](https://github.com/MeeraliN/foundry-workflows-powerfx-guide/issues/new?template=question.yml) for missing answers
+- [Live learning hub](https://meeralin.github.io/foundry-workflows-powerfx-guide/) for the searchable site when Pages is enabled
 
 ## Main questions this repo answers
 
@@ -57,3 +58,10 @@ Once Pages is enabled for the repository, the site should publish at:
 - **What should I master next?** Message collections, structured outputs, tables, loops, and troubleshooting.
 
 If the learner can search this repo and immediately find the answer, the repo is doing its job.
+
+<details>
+<summary>Maintainer note</summary>
+
+The learner should not need to care how the site is deployed. The GitHub Pages workflow lives in `.github/workflows/deploy-pages.yml`, but that is an implementation detail for maintainers, not part of the learning experience.
+
+</details>
