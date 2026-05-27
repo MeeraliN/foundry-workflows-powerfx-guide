@@ -1,0 +1,126 @@
+name: Answer Questions
+
+on:
+  issues:
+    types:
+      - opened
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  reply:
+    if: startsWith(github.event.issue.title, '[Question]:')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post first answer
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const body = issue.body || '';
+            const repoBase = `https://github.com/${context.repo.owner}/${context.repo.repo}/blob/main/docs/guide.md`;
+
+            function getSection(label) {
+              const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+              const match = body.match(new RegExp(`### ${escaped}\\r?\\n\\r?\\n([\\s\\S]*?)(?=\\r?\\n### |$)`));
+              return match ? match[1].trim() : '';
+            }
+
+            const problem = getSection('What are you trying to do?');
+            const expression = getSection('What formula or value did you try?');
+            const error = getSection('What error or behavior did you see?');
+            const topic = getSection('Which topic fits best?');
+            const expected = getSection('What did you expect to happen?');
+
+            const topicReplies = {
+              'Variables and scope': {
+                likely: 'The issue is usually a missing `System.` or `Local.` prefix, or a reference to a variable name that does not exist.',
+                tryText: 'Check whether the value should be `System.SomeValue` or `Local.SomeValue`. If the workflow created it, use `Local.`. If Foundry provides it, use `System.`.',
+                links: [
+                  `${repoBase}#module-2-scope-and-variable-survival`,
+                  `${repoBase}#fast-answers`
+                ]
+              },
+              'Message collections and UserMessage': {
+                likely: 'The field probably expects a message-shaped value, not a raw string.',
+                tryText: 'If the agent input expects a message collection, try wrapping the string with:\n\n```powerfx\nUserMessage(Local.UserPrompt)\n```\n\nIf the field only wants plain text, keep the string as-is. The important question is what type the field expects.',
+                links: [
+                  `${repoBase}#module-4-agent-inputs-and-usermessage`,
+                  `${repoBase}#field-to-type-map`
+                ]
+              },
+              'Conditions and branching': {
+                likely: 'The condition field likely expects a Boolean, but the formula is returning text or another non-Boolean shape.',
+                tryText: 'Use expressions that evaluate to `true` or `false`, such as:\n\n```powerfx\nStartsWith(System.LastMessageText, "help")\n```\n\nor:\n\n```powerfx\nLocal.Score >= 80\n```',
+                links: [
+                  `${repoBase}#module-5-branching-and-conditions`,
+                  `${repoBase}#field-to-type-map`
+                ]
+              },
+              'Structured output and JSON': {
+                likely: 'The workflow may be treating JSON text like a ready-to-use record, or parsing when parsing is not needed.',
+                tryText: 'Save structured agent output into a variable such as `Local.Result`, then read fields from it directly when possible. Use `ParseJSON` only if the value is still plain JSON text.',
+                links: [
+                  `${repoBase}#module-6-structured-outputs-and-json`,
+                  `${repoBase}#field-to-type-map`
+                ]
+              },
+              'Tables and loops': {
+                likely: 'The loop source is probably not a true table or collection.',
+                tryText: 'Before looping, check whether the value actually contains multiple items. A single string such as `Local.Name` cannot be iterated like a table, but a collection such as `Local.Items` can.',
+                links: [
+                  `${repoBase}#module-7-tables-collections-and-loops`,
+                  `${repoBase}#field-to-type-map`
+                ]
+              },
+              'Troubleshooting': {
+                likely: 'The fastest fix usually comes from checking scope first, then field type, then formula output shape.',
+                tryText: 'Use this order:\n1. Check the variable name\n2. Check `System.` vs `Local.`\n3. Check what type the field expects\n4. Check what type your formula returns',
+                links: [
+                  `${repoBase}#module-8-troubleshooting-like-a-builder`,
+                  `${repoBase}#fast-answers`
+                ]
+              },
+              'Other': {
+                likely: 'The workflow issue needs a type-first diagnosis.',
+                tryText: 'Start by asking three questions: what does the field expect, what does the formula return, and is the value plain text, Boolean, record, table, or message-shaped input?',
+                links: [
+                  `${repoBase}#field-to-type-map`,
+                  `${repoBase}#learning-path`
+                ]
+              }
+            };
+
+            const picked = topicReplies[topic] || topicReplies['Other'];
+
+            let bodyReply = `Thanks for opening a question. Here is an automatic first-pass answer based on the topic you selected.\n\n`;
+            bodyReply += `**Likely issue**\n${picked.likely}\n\n`;
+            bodyReply += `**What to try next**\n${picked.tryText}\n\n`;
+
+            if (expression) {
+              bodyReply += `**What you tried**\n\`\`\`powerfx\n${expression}\n\`\`\`\n\n`;
+            }
+
+            if (error) {
+              bodyReply += `**Error or behavior**\n> ${error.replace(/\n/g, '\n> ')}\n\n`;
+            }
+
+            if (expected) {
+              bodyReply += `**Expected result**\n> ${expected.replace(/\n/g, '\n> ')}\n\n`;
+            }
+
+            bodyReply += `**Read next**\n`;
+            for (const link of picked.links) {
+              bodyReply += `- ${link}\n`;
+            }
+
+            bodyReply += `\nIf this automatic answer does not solve it, a maintainer can still reply with a more specific explanation.`;
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.number,
+              body: bodyReply
+            });

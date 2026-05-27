@@ -2,6 +2,13 @@ name: Question
 description: Ask a Foundry workflows Power Fx question
 title: "[Question]: "
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Submit your workflow Power Fx question here.
+        
+        New questions receive an automatic first reply with likely guidance and links to the matching learning-path section.
+
   - type: textarea
     id: problem
     attributes:
