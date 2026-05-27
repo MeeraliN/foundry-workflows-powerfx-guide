@@ -2,6 +2,15 @@
 
 This repository is a **workflow-first learning path** for people building in the **Microsoft Foundry UI** who keep getting blocked by **Power Fx expressions, hidden type expectations, and unclear error messages**.
 
+## Start here in 60 seconds
+
+If you want the short version first, start with these:
+
+- **What is the real problem?** Foundry builders struggle more with [type expectations](#mental-model-every-expression-has-a-type) than with basic syntax.
+- **What should I learn first?** Start with the [recommended learning path](#recommended-learning-path) and learn strings, booleans, variables, and conditions before advanced workflows.
+- **Why does plain text sometimes fail?** Some workflow fields expect a [message collection](#important-pattern-message-collections), not a raw string.
+- **How do I stop trial and error?** Use the [troubleshooting guide](#level-6-learn-troubleshooting-like-an-expert) to map errors to likely causes.
+- **How do I go from beginner to advanced?** Follow the [game mode level-up path](#game-mode-level-up-path).
 The current official material is useful, but fragmented. You can find:
 
 | Resource | What it helps with | Link |
@@ -239,6 +248,40 @@ If you want a concrete sequence, use this:
 | 7 | Add human approval | workflow orchestration |
 | 8 | Build a multi-agent triage workflow | end-to-end design |
 
+## Game mode: level-up path
+
+If you want this to feel less like documentation and more like progression, use this path like a game.
+
+| Rank | Mission | Win condition | Unlocks |
+| --- | --- | --- | --- |
+| **Rookie Builder** | Build "ask -> save -> reply" | Save a user answer and return `Upper(Local.Name)` | [Variables and scope](#mental-model-scope-matters) |
+| **Branch Explorer** | Build your first if/else route | Use `System.LastMessageText` in a Boolean condition | [Conditions and Boolean logic](#level-2-learn-the-minimum-power-fx-you-actually-need-for-workflows) |
+| **Type Detective** | Fix 3 type mismatches | Explain why a field wants string, Boolean, table, or message collection | [Type thinking](#level-3-learn-foundry-specific-type-thinking) |
+| **Message Wrangler** | Send the right payload to an agent | Use `UserMessage(Local.PromptText)` in the correct place | [Message collection pattern](#important-pattern-message-collections) |
+| **Flow Strategist** | Route based on structured output | Save JSON, read fields, branch correctly | [Structured outputs and branching](#level-4-learn-structured-outputs-and-branching) |
+| **Loop Runner** | Process multiple items | Use a collection in a for-each or table flow | [Loops and collections](#level-5-learn-loops-collections-and-transformation) |
+| **Workflow Guardian** | Diagnose failures fast | Identify the root cause from an error without guessing | [Troubleshooting](#level-6-learn-troubleshooting-like-an-expert) |
+| **Foundry Architect** | Build a real end-to-end workflow | Combine agent input, conditions, loops, and human review | [Practice sequence](#a-beginner-to-expert-practice-sequence) |
+
+### Suggested scoring
+
+- **10 XP**: finish a basic expression
+- **25 XP**: fix a type mismatch without searching
+- **50 XP**: build a working branch or loop
+- **100 XP**: complete a full multi-node workflow
+
+### Boss battle
+
+Build a workflow that:
+
+1. asks the user for input
+2. converts the input into the right agent message shape
+3. gets structured output back from an agent
+4. branches based on confidence or category
+5. loops over returned items if needed
+6. sends the final answer to the user or a human approver
+
+If you can do that without guessing what type each field expects, you are no longer a beginner.
 ## Suggested teaching structure for this repository
 
 If you want this repo to become the missing learning path, the best structure is:
@@ -276,3 +319,17 @@ This repository should teach people to answer these questions without guesswork:
 - How do I build conditions, loops, and structured outputs without trial and error?
 
 If this repo does that well, it fills a real gap in the current Microsoft Foundry learning experience.
+
+## Quick answer summary
+
+If someone only reads one section, this should answer the main questions quickly:
+
+| Question | Short answer | Read more |
+| --- | --- | --- |
+| Is there already one complete official guide for Foundry workflows + Power Fx in the UI? | **No.** There are good official pieces, but not one end-to-end workflow-first guide. | [Recommended official repos to learn from](#recommended-official-repos-to-learn-from) |
+| What is the recommended learning path? | Start with workflow basics, then learn the Power Fx subset used most in workflows, then move into types, branching, loops, and troubleshooting. | [Recommended learning path](#recommended-learning-path) |
+| What is the biggest beginner mistake? | Treating every failure like a syntax issue instead of a type issue. | [Mental model: every expression has a type](#mental-model-every-expression-has-a-type) |
+| Why do some agent inputs fail when plain text looks valid? | Because some fields expect a message collection shape, not a raw string. | [Important pattern: message collections](#important-pattern-message-collections) |
+| What should I do when I see `Name isn't valid`? | Check whether you forgot the correct variable scope prefix like `Local.` or `System.`. | [Mental model: scope matters](#mental-model-scope-matters) |
+| What should I do when I see `Type mismatch`? | Check what type the field expects, then convert or reshape your expression output. | [Troubleshooting guide](#level-6-learn-troubleshooting-like-an-expert) |
+| How do I go from beginner to advanced without getting discouraged? | Follow a staged progression with small wins, then use the game-style journey to level up. | [Game mode: level-up path](#game-mode-level-up-path) |
