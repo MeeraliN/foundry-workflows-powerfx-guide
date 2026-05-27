@@ -20,7 +20,6 @@
       <div class="hero-actions">
         <a class="button primary" href="#answers">Search answers</a>
         <a class="button secondary" href="#learning-path">Start learning path</a>
-        <a class="button secondary" href="#game-mode">Play game mode</a>
         <a class="button ghost" href="https://github.com/MeeraliN/foundry-workflows-powerfx-guide/issues/new?template=question.yml">Question portal</a>
       </div>
     </div>
@@ -129,7 +128,6 @@
       <div class="container">
         <h2>Learning path</h2>
         <p class="section-intro">Follow this in order like a Microsoft Learn module sequence.</p>
-        <p><a class="button primary" href="#game-mode">After the modules, play game mode</a></p>
         <div class="module-grid">
           <article class="module-card">
             <span class="module-number">01</span>
@@ -210,46 +208,6 @@
               <li>Check type before rewriting syntax</li>
               <li>Debug with a repeatable workflow</li>
             </ul>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section alt" id="game-mode">
-      <div class="container">
-        <h2>Game mode: from beginner to expert</h2>
-        <p class="section-intro">This is the mastery track. Each rank closes part of the gap.</p>
-        <p><a class="button secondary" href="https://github.com/MeeraliN/foundry-workflows-powerfx-guide/issues/new?template=question.yml">Open the question portal if you get stuck</a></p>
-        <div class="quest-board">
-          <article class="quest-card">
-            <h3>Rookie Builder</h3>
-            <p>Mission: build <code>ask -> save -> reply</code>.</p>
-            <p>Win condition: save a user answer into <code>Local.Name</code> and return <code>Upper(Local.Name)</code>.</p>
-          </article>
-          <article class="quest-card">
-            <h3>Branch Explorer</h3>
-            <p>Mission: route a workflow using a real Boolean.</p>
-            <p>Win condition: branch successfully from <code>System.LastMessageText</code>.</p>
-          </article>
-          <article class="quest-card">
-            <h3>Type Detective</h3>
-            <p>Mission: solve three failures without guessing.</p>
-            <p>Win condition: explain whether the field expects string, Boolean, table, record, blank, or message collection.</p>
-          </article>
-          <article class="quest-card">
-            <h3>Message Wrangler</h3>
-            <p>Mission: fix the agent-input gap.</p>
-            <p>Win condition: replace failing plain text with <code>UserMessage(Local.PromptText)</code> where needed.</p>
-          </article>
-          <article class="quest-card">
-            <h3>Flow Strategist</h3>
-            <p>Mission: route from structured output.</p>
-            <p>Win condition: save JSON output, read a field, and branch correctly.</p>
-          </article>
-          <article class="quest-card">
-            <h3>Foundry Architect</h3>
-            <p>Mission: build one full workflow that uses agent input, branching, collections, and escalation.</p>
-            <p>Win condition: explain every field's expected type without trial and error.</p>
           </article>
         </div>
       </div>
